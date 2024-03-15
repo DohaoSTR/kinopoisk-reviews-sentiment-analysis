@@ -11,13 +11,6 @@ from pandas.io.formats.style_render import DataFrame
 def get_dataset(path: str) -> DataFrame:
     return pd.read_pickle(path + ".pkl")
 
-dataset = get_dataset("cleaned_dataset")
-reviews = dataset["review"]
-
-reviews_string = []
-for comment in reviews.tolist():
-    reviews_string.append(str(comment))
-
 def classification(max_feautures, min_df, max_df, n_estimators):
     vectorizer = TfidfVectorizer(max_features=max_feautures, min_df = min_df, max_df = max_df)
     reviews_vectorized = vectorizer.fit_transform(reviews_string).toarray()
@@ -48,5 +41,12 @@ def test():
     df = pd.DataFrame(data, columns = ["Точность", "value"])
     print(df)
 
+dataset = get_dataset("cleaned_dataset")
+reviews = dataset["review"]
+
+reviews_string = []
+for comment in reviews.tolist():
+    reviews_string.append(str(comment))
+    
 #classification(5500, 40, 0.82, 1000)
 #test()

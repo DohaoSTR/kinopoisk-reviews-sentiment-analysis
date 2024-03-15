@@ -13,6 +13,8 @@ from nltk.stem import SnowballStemmer
 import spacy
 import pymorphy2
 
+from get_data_from_files import get_dataset, save_dataset
+
 nltk.download('punkt')
 nltk.download('stopwords')
 nlkt_stopwords = set(stopwords.words('russian'))
@@ -23,12 +25,6 @@ spacy_stopwords = sp.Defaults.stop_words
 stemmer = SnowballStemmer(language="russian")
 
 morph_analyzer = pymorphy2.MorphAnalyzer()
-
-def get_dataset(path: str) -> DataFrame:
-    return pd.read_pickle(path + ".pkl")
-
-def save_dataset(dataset: DataFrame, path: str):
-    dataset.to_pickle(path + ".pkl")
 
 def save_dataset_xlsx(dataset: DataFrame, path: str):
     dataset.to_excel(path + ".xlsx")

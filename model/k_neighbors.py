@@ -15,15 +15,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 import matplotlib.pyplot as plt
 %matplotlib inline
 
-def get_dataset(path: str) -> DataFrame:
-    return pd.read_pickle(path + ".pkl")
-
-dataset = get_dataset("cleaned_dataset")
-reviews = dataset["review"]
-
-newComments = []
-for comment in reviews.tolist():
-    newComments.append(str(comment))
+from get_data_from_files import get_dataset
 
 def classification(max_feautures, min_df, max_df, n_neighbors):
     vectorizer = TfidfVectorizer(max_features=max_feautures, min_df = min_df, max_df = max_df)
@@ -69,6 +61,14 @@ def test_n():
         error_rates.append(np.mean(new_predictions != y_test))
     plt.plot(error_rates)
 
-#classification(5500, 40, 0.82, 82)
-#test_n()
-#test()
+if __name__ == "__main__":
+    dataset = get_dataset("cleaned_dataset")
+    reviews = dataset["review"]
+
+    newComments = []
+    for comment in reviews.tolist():
+        newComments.append(str(comment))
+
+    classification(5500, 40, 0.82, 82)
+    test_n()
+    test()

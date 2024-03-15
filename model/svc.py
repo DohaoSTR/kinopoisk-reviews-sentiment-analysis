@@ -11,15 +11,7 @@ from sklearn.svm import SVC
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-def get_dataset(path: str) -> DataFrame:
-    return pd.read_pickle(path + ".pkl")
-
-dataset = get_dataset("cleaned_dataset")
-reviews = dataset["review"]
-
-list_reviews = []
-for review in reviews.tolist():
-  list_reviews.append(str(review))
+from get_data_from_files import get_dataset
 
 def classification(max_feautures, min_df, max_df, kernel, degree):
     vectorizer = TfidfVectorizer(max_features=max_feautures, 
@@ -69,6 +61,14 @@ def get(max_feautures, min_df, max_df, kernel, degree, comment):
     predicted = classifier.predict(x_test)
 
 
-#classification(5500, 40, 0.82, "poly", 2)
-#test()
-#get(5500, 40, 0.82, "poly", 2, comment)
+if __name__ == "__main__":
+    dataset = get_dataset("cleaned_dataset")
+    reviews = dataset["review"]
+
+    list_reviews = []
+    for review in reviews.tolist():
+        list_reviews.append(str(review))
+        
+    classification(5500, 40, 0.82, "poly", 2)
+    test()
+    get(5500, 40, 0.82, "poly", 2, comment)

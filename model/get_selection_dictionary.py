@@ -1,3 +1,4 @@
+from operator import itemgetter
 from typing import List
 
 import pandas as pd
@@ -5,17 +6,9 @@ import pickle
 
 from pandas.io.formats.style_render import DataFrame
 
-def get_dataset(path: str) -> DataFrame:
-    return pd.read_pickle(path + ".pkl")
+from get_data_from_files import get_dataset
 
-def save_dataset(dataset: DataFrame, path: str):
-    dataset.to_pickle(path + ".pkl")
-
-dataset = get_dataset("cleaned_dataset")
-reviews = dataset["review"]
-
-# получаем словарь выборки
-def get_dictionary(reviews) -> List[str]:
+def get_selection_dictionary(reviews) -> List[str]:
     dictionary = {}
 
     for review in reviews:
@@ -32,19 +25,24 @@ def get_dictionary(reviews) -> List[str]:
             dictionary.remove(element)
 
     dictionary = sorted(set(dictionary), key=itemgetter(1), reverse = True)
+
     return dictionary
 
-dictionary = get_dictionary(reviews)
+if __name__ == "__main__":
+    dataset = get_dataset("cleaned_dataset")
+    reviews = dataset["review"]
 
-words = []
-counts = []
-for element in dictionary:
-    words.append(element[0])
-    counts.append(element[1])
+    dictionary = get_selection_dictionary(reviews)
 
-dictionary = set(dict(zip(words, counts)))
+    words = []
+    counts = []
+    for element in dictionary:
+        words.append(element[0])
+        counts.append(element[1])
 
-file = open('dictionary.bin', 'wb')
-pickle.dump(dictionary, file)
+    dictionary = set(dict(zip(words, counts)))
 
-print(dictionary)
+    file = open('dictionary.bin', 'wb')
+    pickle.dump(dictionary, file)
+
+    print(dictionary)
