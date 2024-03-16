@@ -1,11 +1,5 @@
 import pandas as pd
-import pickle
 import numpy as np
-
-from pandas.io.formats.style_render import DataFrame
-
-import scipy
-from scipy import _lib
 
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
@@ -13,7 +7,6 @@ from sklearn.metrics import classification_report, confusion_matrix, accuracy_sc
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 import matplotlib.pyplot as plt
-%matplotlib inline
 
 from get_data_from_files import get_dataset
 

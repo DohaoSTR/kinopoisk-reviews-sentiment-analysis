@@ -1,14 +1,12 @@
+import numpy as np
 import pandas as pd
-import pickle
 
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-from pandas.io.formats.style_render import DataFrame
-
-def get_dataset(path: str) -> DataFrame:
+def get_dataset(path: str) -> pd.DataFrame:
     return pd.read_pickle(path + ".pkl")
 
 def classification(max_feautures, min_df, max_df, n_estimators):
@@ -26,7 +24,7 @@ def classification(max_feautures, min_df, max_df, n_estimators):
     print(classification_report(y_test, y_pred))
     print("Точность: " + str(accuracy_score(y_test, y_pred)))
 
-    return accuracy_score(y_test, y_pred);
+    return accuracy_score(y_test, y_pred)
 
 def test():
     accuracy_list = []
@@ -41,12 +39,13 @@ def test():
     df = pd.DataFrame(data, columns = ["Точность", "value"])
     print(df)
 
-dataset = get_dataset("cleaned_dataset")
-reviews = dataset["review"]
+if __name__ == "__main__":
+    dataset = get_dataset("cleaned_dataset")
+    reviews = dataset["review"]
 
-reviews_string = []
-for comment in reviews.tolist():
-    reviews_string.append(str(comment))
-    
-#classification(5500, 40, 0.82, 1000)
-#test()
+    reviews_string = []
+    for comment in reviews.tolist():
+        reviews_string.append(str(comment))
+        
+    classification(5500, 40, 0.82, 1000)
+    test()

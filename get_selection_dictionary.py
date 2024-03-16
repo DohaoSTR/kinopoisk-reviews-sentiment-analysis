@@ -1,10 +1,7 @@
 from operator import itemgetter
 from typing import List
 
-import pandas as pd
 import pickle
-
-from pandas.io.formats.style_render import DataFrame
 
 from get_data_from_files import get_dataset
 

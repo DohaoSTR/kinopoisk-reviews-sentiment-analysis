@@ -1,8 +1,6 @@
 from typing import List
 
 import pandas as pd
-from pandas.io.formats.style_render import DataFrame
-
 import numpy as np
 
 import nltk
@@ -15,6 +13,9 @@ import pymorphy2
 
 from get_data_from_files import get_dataset, save_dataset
 
+###
+
+# install needed packages and init needed classes
 nltk.download('punkt')
 nltk.download('stopwords')
 nlkt_stopwords = set(stopwords.words('russian'))
@@ -26,7 +27,9 @@ stemmer = SnowballStemmer(language="russian")
 
 morph_analyzer = pymorphy2.MorphAnalyzer()
 
-def save_dataset_xlsx(dataset: DataFrame, path: str):
+###
+
+def save_dataset_xlsx(dataset: pd.DataFrame, path: str):
     dataset.to_excel(path + ".xlsx")
 
 def get_words_without_symbols(review: str) -> List[str]:
